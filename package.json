@@ -1,0 +1,19 @@
+{
+  "name": "repom",
+  "version": "1.0.0",
+  "description": "CLI for managing repositories. configurable, customizable, interactive.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "bin": "bin/index.js",
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.2"
+  }
+}
