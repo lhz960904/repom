@@ -1,6 +1,6 @@
 {
   "name": "repom",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "CLI for managing repositories. configurable, customizable, interactive.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -10,8 +10,12 @@
     "build": "tsup"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "files": [
+    "/dist",
+    "/bin"
+  ],
+  "author": "lihaozecq@gmail.com",
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.10.0",
     "tsup": "^8.0.1",
