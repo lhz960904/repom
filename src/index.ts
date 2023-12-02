@@ -1,16 +1,16 @@
 import cac from 'cac'
 import { version } from '../package.json'
+import { init } from './command/init'
+import { add } from './command/add'
 
-const cli = cac()
+const cli = cac('repom')
 
-cli.option('--type <type>', 'Choose a project type', {
-  default: 'node',
-})
+cli.command('init', 'Init repom cli config').action(init)
+
+cli.command('add <repository>', 'Clone a repository into directory').action(add)
 
 cli.help()
 
 cli.version(version)
 
-const parsed = cli.parse()
-
-console.log(JSON.stringify(parsed, null, 2))
+cli.parse()
