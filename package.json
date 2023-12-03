@@ -1,7 +1,7 @@
 {
   "name": "repom",
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "CLI for managing repositories. configurable, customizable, interactive.",
   "author": "lihaozecq@gmail.com",
   "license": "MIT",
@@ -17,7 +17,8 @@
     "dev": "tsup --watch",
     "build": "tsup",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "release": "bumpp && npm publish"
   },
   "dependencies": {
     "@inquirer/checkbox": "^1.5.0",
@@ -40,6 +41,7 @@
     "@types/node": "^20.10.0",
     "@typescript-eslint/eslint-plugin": "^6.13.1",
     "@typescript-eslint/parser": "^6.13.1",
+    "bumpp": "^9.2.0",
     "eslint": "^8.54.0",
     "eslint-plugin-jsdoc": "^46.9.0",
     "eslint-plugin-n": "^16.3.1",
