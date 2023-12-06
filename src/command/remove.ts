@@ -1,5 +1,4 @@
 import { dirname, join } from 'node:path'
-import fs from 'node:fs'
 import fsp from 'node:fs/promises'
 import fg from 'fast-glob'
 import { logger, resolveConfig } from 'src/shared'
@@ -13,7 +12,8 @@ async function clearEmptyDir(path: string, endPath: string) {
   if (parentPath === endPath) {
     return
   }
-  if (fs.readdirSync(parentPath).length === 0) {
+  const files = await fsp.readdir(parentPath)
+  if (files.length === 0) {
     await fsp.rm(parentPath, { recursive: true })
     await clearEmptyDir(parentPath, endPath)
   }
@@ -34,10 +34,14 @@ async function removeDir(dirs: string[]) {
 export async function remove(name: string) {
   const config = await resolveConfig()
 
+  const spinner = ora('searching repositories').start()
+
   const dirs = await fg(['**/.git', '!**/node_modules/**'], {
     onlyDirectories: true,
     cwd: config.baseDir,
   })
+
+  spinner.stop()
 
   const matchDirs = dirs.map((directory: string) => {
     const path = directory.replace(/\/\.git$/, '')
