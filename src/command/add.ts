@@ -5,7 +5,7 @@ import chalk from 'chalk'
 import ora from 'ora'
 import clipboard from 'clipboardy'
 
-export async function add(repository: string) {
+export async function add(repository: string, options: { open?: boolean }) {
   const targetPath = await resolveTargetPath(repository)
 
   if (fs.existsSync(targetPath)) {
@@ -21,4 +21,13 @@ export async function add(repository: string) {
 
   await clipboard.write(`cd ${targetPath}`)
   logger.success(`📋 ${chalk.green('Copied to clipboard')}, just use Ctrl+V`)
+
+  if (options.open) {
+    try {
+      await $`code ${targetPath}`
+    }
+    catch (error) {
+      logger.error(`Open vscode failed, ${error}`)
+    }
+  }
 }

@@ -8,7 +8,9 @@ const cli = cac('repom')
 
 cli.command('init', 'Init repom cli config').action(init)
 
-cli.command('add <repository>', 'Clone a repository into directory').action(add)
+cli.command('add <repository>', 'Clone a repository into directory')
+  .option('-o, --open', 'Auto open by vscode')
+  .action(add)
 
 cli.command('remove <name>', 'Remove repository by name, support fuzzy match').action(remove)
 
