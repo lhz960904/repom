@@ -1,5 +1,3 @@
-import { join } from 'node:path'
-import fg from 'fast-glob'
 import { logger, normalizeCliWidth, resolveConfig, resolveTargetPath, scanRepo } from 'src/shared'
 import confirm from '@inquirer/confirm'
 import chalk from 'chalk'
