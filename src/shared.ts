@@ -4,6 +4,8 @@ import fs from 'node:fs'
 import fsp from 'node:fs/promises'
 import { createConsola } from 'consola'
 import parseGitURL from 'git-url-parse'
+import fg from 'fast-glob'
+import ora from 'ora'
 
 export const configDir = join(process.env.HOME!, '.repom')
 export const configPath = join(configDir, 'config.json')
@@ -56,4 +58,19 @@ export async function resolveTargetPath(repository: string) {
   const targetPath = join(config.baseDir, ...suffixPaths)
 
   return targetPath
+}
+
+export function normalizeCliWidth(strArr: string[]) {
+  const max = strArr.reduce((acc, cur) => Math.max(acc, cur.length), 0)
+  return strArr.map(str => str.padEnd(max))
+}
+
+export async function scanRepo(cwd: string) {
+  const spinner = ora('scan repositories').start()
+  const dirs = await fg(['**/.git', '!**/node_modules/**'], {
+    onlyDirectories: true,
+    cwd,
+  })
+  spinner.stop()
+  return dirs.map(item => join(cwd, item.replace(/\/\.git$/, '')))
 }

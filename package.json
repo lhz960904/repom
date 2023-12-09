@@ -32,6 +32,8 @@
     "consola": "^3.2.3",
     "execa": "^8.0.1",
     "fast-glob": "^3.3.2",
+    "fs-extra": "^11.2.0",
+    "git-remote-origin-url": "^4.0.0",
     "git-url-parse": "^13.1.1",
     "inquirer": "^9.2.12",
     "ora": "^7.0.1"
@@ -40,6 +42,7 @@
     "@antfu/eslint-config": "^2.3.4",
     "@eslint/js": "^8.55.0",
     "@stylistic/eslint-plugin": "^1.5.0",
+    "@types/fs-extra": "^11.0.4",
     "@types/git-url-parse": "^9.0.3",
     "@types/node": "^20.10.4",
     "@typescript-eslint/eslint-plugin": "^6.13.2",

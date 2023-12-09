@@ -1,7 +1,7 @@
 import { dirname, join } from 'node:path'
 import fsp from 'node:fs/promises'
 import fg from 'fast-glob'
-import { logger, resolveConfig } from 'src/shared'
+import { logger, resolveConfig, scanRepo } from 'src/shared'
 import checkbox from '@inquirer/checkbox'
 import confirm from '@inquirer/confirm'
 import chalk from 'chalk'
@@ -34,19 +34,9 @@ async function removeDir(dirs: string[]) {
 export async function remove(name: string) {
   const config = await resolveConfig()
 
-  const spinner = ora('searching repositories').start()
+  const dirs = await scanRepo(config.baseDir)
 
-  const dirs = await fg(['**/.git', '!**/node_modules/**'], {
-    onlyDirectories: true,
-    cwd: config.baseDir,
-  })
-
-  spinner.stop()
-
-  const matchDirs = dirs.map((directory: string) => {
-    const path = directory.replace(/\/\.git$/, '')
-    return path.split('/').pop()?.includes(name) ? path : ''
-  }).filter(Boolean)
+  const matchDirs = dirs.map((path: string) => path.split('/').pop()?.includes(name) ? path : '').filter(Boolean)
 
   if (matchDirs.length === 0) {
     logger.error('No match repository')
