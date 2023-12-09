@@ -34,7 +34,7 @@ export async function remove(name: string) {
 
   const dirs = await scanRepo(config.baseDir)
 
-  const matchDirs = dirs.map((path: string) => path.split('/').pop()?.includes(name) ? path : '').filter(Boolean)
+  const matchDirs = dirs.map((path: string) => path.includes(name) ? path : '').filter(Boolean)
 
   if (matchDirs.length === 0) {
     logger.error('No match repository')
