@@ -66,7 +66,7 @@ Support  fuzzy match. Multiple selections can be made if multiple matches are fo
 ### Find repository
 
 ```bash
-repom find
+repom find <name>
 ```
 ![remove screen shot](./img/find.png)
 
