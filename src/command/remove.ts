@@ -1,6 +1,5 @@
 import { dirname, join } from 'node:path'
 import fsp from 'node:fs/promises'
-import fg from 'fast-glob'
 import { logger, resolveConfig, scanRepo } from 'src/shared'
 import checkbox from '@inquirer/checkbox'
 import confirm from '@inquirer/confirm'
