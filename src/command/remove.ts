@@ -6,7 +6,7 @@ import confirm from '@inquirer/confirm'
 import chalk from 'chalk'
 import ora from 'ora'
 
-async function clearEmptyDir(path: string, endPath: string) {
+export async function clearEmptyDir(path: string, endPath: string) {
   const parentPath = dirname(path)
   if (parentPath === endPath) {
     return

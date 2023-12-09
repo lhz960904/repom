@@ -4,6 +4,7 @@ import chalk from 'chalk'
 import ora from 'ora'
 import gitRemoteOriginUrl from 'git-remote-origin-url'
 import fse from 'fs-extra'
+import { clearEmptyDir } from './remove'
 
 interface Task {
   oldPath: string
@@ -46,6 +47,7 @@ export async function cleanUp(targetDir?: string) {
     for (const task of tasks) {
       spinner.text = `Moving ${task.oldPath} to ${task.newPath}`
       await fse.move(task.oldPath, task.newPath)
+      await clearEmptyDir(task.oldPath, sourceDir)
     }
     spinner.succeed(`Done! If it's helpful to you, please ⭐️ it on Github, Thank you!`)
   }
