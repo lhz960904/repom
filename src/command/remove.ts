@@ -23,9 +23,8 @@ async function removeDir(dirs: string[]) {
   const spinner = ora(`begin remove repository`).start()
   for (const dir of dirs) {
     spinner.text = `removing repository ${chalk.yellow(dir)}`
-    const targetPath = join(config.baseDir, dir)
-    await fsp.rm(targetPath, { recursive: true })
-    await clearEmptyDir(targetPath, config.baseDir)
+    await fsp.rm(dir, { recursive: true })
+    await clearEmptyDir(dir, config.baseDir)
   }
   spinner.succeed('removed successfully')
 }
