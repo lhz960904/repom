@@ -17,6 +17,7 @@ export async function cleanUp(targetDir?: string) {
 
   const dirs = await scanRepo(sourceDir)
 
+  const failedRemoteDirs: string[] = []
   let tasks: Task[] = await Promise.all(dirs.map(async (oldPath) => {
     try {
       const remoteURL = await gitRemoteOriginUrl({ cwd: oldPath })
@@ -24,10 +25,13 @@ export async function cleanUp(targetDir?: string) {
       return { oldPath, newPath }
     }
     catch (error) {
-      logger.warn(`Can't resolve git remote url for ${chalk.cyanBright(oldPath)}, it will be ignored`)
+      failedRemoteDirs.push(oldPath)
     }
     return { oldPath: '', newPath: '' }
   }))
+
+  logger.warn(`The following directories can't resolve git remote url, them will be ignored`)
+  logger.log(chalk.yellow(failedRemoteDirs.join('\n')))
 
   // filter don't need move
   tasks = tasks.filter(task => task.oldPath !== task.newPath)
@@ -38,12 +42,15 @@ export async function cleanUp(targetDir?: string) {
   // check nested directory, nested directory not allowed, if exists filter it
   tasks = checkNestedDir(tasks)
 
+  tasks.sort((a, b) => a.oldPath.length - b.oldPath.length)
+
   showMoveDiff(sourceDir, config.baseDir, tasks)
 
+  const spinner = ora('Moving')
   try {
     const confirmMove = await confirm({ message: `Confirm moving the directory according to the above info ?` })
     if (!confirmMove) return
-    const spinner = ora('Moving').start()
+    spinner.start()
     for (const task of tasks) {
       spinner.text = `Moving ${task.oldPath} to ${task.newPath}`
       await fse.move(task.oldPath, task.newPath)
@@ -52,6 +59,7 @@ export async function cleanUp(targetDir?: string) {
     spinner.succeed(`Done! If it's helpful to you, please ⭐️ it on Github, Thank you!`)
   }
   catch (error) {
+    spinner.stop()
     logger.error(error)
   }
 }
@@ -87,12 +95,9 @@ function checkExistDir(tasks: Task[]) {
 }
 
 function showMoveDiff(sourceDir: string, targetDir: string, tasks: Task[]) {
-  tasks.sort((a, b) => a.oldPath.length - b.oldPath.length)
-
-  normalizeCliWidth(tasks.map(task => task.oldPath)).forEach((oldPath, index) => {
-    tasks[index].oldPath = oldPath
+  tasks = normalizeCliWidth(tasks.map(task => task.oldPath)).map((oldPath, index) => {
+    return { oldPath, newPath: tasks[index].newPath }
   })
-
   logger.log('')
   logger.log(`clean up 📂${chalk.cyanBright(sourceDir)} repositories into 📂${chalk.cyanBright(targetDir)}`)
   tasks.forEach((task) => {
