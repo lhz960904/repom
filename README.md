@@ -82,7 +82,7 @@ repom clean-up <dir>
 
 ![clean up screen shot](./img/clean_up.png)
 
-# Config
+## Config
 
 - `baseDir` : Repositories will be cloned to, default  `~/Users/Documents/Code`.
 - `groupBy` : Group according to the following option
