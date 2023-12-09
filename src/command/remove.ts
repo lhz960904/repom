@@ -1,4 +1,4 @@
-import { dirname, join } from 'node:path'
+import { dirname } from 'node:path'
 import fsp from 'node:fs/promises'
 import { logger, resolveConfig, scanRepo } from 'src/shared'
 import checkbox from '@inquirer/checkbox'
