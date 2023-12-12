@@ -1,4 +1,4 @@
-import { join } from 'node:path'
+import { join, resolve } from 'node:path'
 import process from 'node:process'
 import fs from 'node:fs'
 import fsp from 'node:fs/promises'
@@ -7,7 +7,8 @@ import parseGitURL from 'git-url-parse'
 import fg from 'fast-glob'
 import ora from 'ora'
 
-export const configDir = join(process.env.HOME!, '.repom')
+const HOME = process.env.VITEST ? resolve('test') : process.env.HOME!
+export const configDir = join(HOME, '.repom')
 export const configPath = join(configDir, 'config.json')
 
 export interface Config {
@@ -20,7 +21,7 @@ export interface Config {
 }
 
 export const defaultConfig: Config = {
-  baseDir: `${process.env.HOME}/Documents/Code`,
+  baseDir: `${HOME}/Documents/Code`,
   groupBy: {
     source: false,
     owner: true,
