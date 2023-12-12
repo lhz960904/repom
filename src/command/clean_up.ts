@@ -30,8 +30,10 @@ export async function cleanUp(targetDir?: string) {
     return { oldPath: '', newPath: '' }
   }))
 
-  logger.warn(`The following directories can't resolve git remote url, them will be ignored`)
-  logger.log(chalk.yellow(failedRemoteDirs.join('\n')))
+  if (failedRemoteDirs.length) {
+    logger.warn(`The following directories can't resolve git remote url, them will be ignored`)
+    logger.log(chalk.yellow(failedRemoteDirs.join('\n')))
+  }
 
   // filter don't need move
   tasks = tasks.filter(task => task.oldPath !== task.newPath)
