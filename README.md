@@ -4,6 +4,7 @@
 
 [![NPM version](https://img.shields.io/npm/v/repom)](https://www.npmjs.com/package/repom)
 
+![GitHub Action Status](https://img.shields.io/github/actions/workflow/status/lhz960904/repom/ci.yml)
 
 ## Overview
 
