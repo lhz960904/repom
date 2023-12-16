@@ -1,7 +1,7 @@
 import fsp from 'node:fs/promises'
 import fs from 'node:fs'
 import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
-import { configDir, configPath, logger } from 'src/shared'
+import { logger } from 'src/shared'
 import { init } from '../src/command/init'
 
 vi.mock('node:fs/promises')
