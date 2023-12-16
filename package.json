@@ -22,6 +22,7 @@
     "prepublishOnly": "npm run build",
     "release": "bumpp && npm publish",
     "prepare": "simple-git-hooks",
+    "typecheck": "tsc --noEmit",
     "test": "vitest"
   },
   "dependencies": {
