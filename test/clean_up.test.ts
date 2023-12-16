@@ -1,7 +1,7 @@
 import type { PathLike } from 'node:fs'
 import { logger } from 'src/shared'
 import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
-import { checkExistDir, checkNestedDir, showMoveDiff } from 'src/command/clean_up'
+import { checkExistDir, checkNestedDir } from 'src/command/clean_up'
 import fse from 'fs-extra'
 
 vi.mock('fs-extra')

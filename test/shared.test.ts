@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import fsp from 'node:fs/promises'
+import path from 'node:path'
 import fg from 'fast-glob'
 import { describe, expect, it, vi } from 'vitest'
 import { defaultConfig, normalizeCliWidth, resolveConfig, resolveTargetPath, scanRepo } from 'src/shared'
@@ -45,7 +46,7 @@ describe('shared', () => {
       vi.mocked(fs.existsSync).mockReturnValueOnce(true)
       vi.mocked(fsp.readFile).mockResolvedValueOnce(JSON.stringify(config))
       const path = await resolveTargetPath(repository)
-      expect(path).toEqual(expected)
+      expect(path.normalize(path)).toEqual(path.normalize(expected))
     })
   })
 
@@ -61,6 +62,6 @@ describe('shared', () => {
 
   it('scanRepo', () => {
     vi.mocked(fg).mockResolvedValue(['Code/lhz960904/repom'])
-    expect(scanRepo('/cwd')).resolves.toEqual(['/cwd/Code/lhz960904/repom'])
+    expect(scanRepo('/cwd')).resolves.toEqual([path.normalize('/cwd/Code/lhz960904/repom')])
   })
 })

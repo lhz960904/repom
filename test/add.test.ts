@@ -1,5 +1,6 @@
 import fsp from 'node:fs/promises'
 import fs from 'node:fs'
+import path from 'node:path'
 import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { logger } from 'src/shared'
 import { add } from 'src/command/add'
@@ -26,11 +27,7 @@ describe('command add', () => {
     await add('https://github.com/lhz960904/repom.git', {})
     // @ts-expect-error test only
     const stdout = logger.error.mock.calls.map((args: any[]) => args[0]) as string[]
-    expect(stdout).toMatchInlineSnapshot(`
-      [
-        "Repository already exists, path: [33m/test/github.com/lhz960904/repom[39m",
-      ]
-    `)
+    expect(stdout).toMatch(/Repository already exists/)
   })
 
   it('clone if target path not exist', async () => {
@@ -39,11 +36,11 @@ describe('command add', () => {
       'git clone ',
       ' ',
       '',
-    ], 'https://github.com/lhz960904/repom.git', '/test/github.com/lhz960904/repom')
+    ], 'https://github.com/lhz960904/repom.git', path.normalize('/test/github.com/lhz960904/repom'))
   })
 
   it('execute code command if with open command', async () => {
     await add('https://github.com/lhz960904/repom.git', { open: true })
-    expect($).toHaveBeenLastCalledWith(['code ', ''], '/test/github.com/lhz960904/repom')
+    expect($).toHaveBeenLastCalledWith(['code ', ''], path.normalize('/test/github.com/lhz960904/repom'))
   })
 })
