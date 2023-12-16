@@ -1,4 +1,4 @@
-import { join } from 'node:path'
+import path, { join } from 'node:path'
 import process from 'node:process'
 import fs from 'node:fs'
 import fsp from 'node:fs/promises'
@@ -54,7 +54,7 @@ export async function resolveTargetPath(repository: string) {
 
   const targetPath = join(config.baseDir, ...suffixPaths)
 
-  return targetPath
+  return path.normalize(targetPath)
 }
 
 export function normalizeCliWidth(strArr: string[]) {

@@ -27,26 +27,26 @@ describe('shared', () => {
     const cases = [
       {
         config: { baseDir: '/test', groupBy: { source: true, owner: true } },
-        expected: '/test/github.com/lhz960904/repom',
+        expected: path.normalize('/test/github.com/lhz960904/repom'),
       },
       {
         config: { baseDir: '/test', groupBy: { source: true, owner: true } },
-        expected: '/test/github.com/lhz960904/repom',
+        expected: path.normalize('/test/github.com/lhz960904/repom'),
       },
       {
         config: { baseDir: '/test', groupBy: { source: false, owner: true } },
-        expected: '/test/lhz960904/repom',
+        expected: path.normalize('/test/lhz960904/repom'),
       },
       {
         config: { baseDir: '/test', groupBy: { source: false, owner: false } },
-        expected: '/test/repom',
+        expected: path.normalize('/test/repom'),
       },
     ]
     cases.forEach(async ({ config, expected }) => {
       vi.mocked(fs.existsSync).mockReturnValueOnce(true)
       vi.mocked(fsp.readFile).mockResolvedValueOnce(JSON.stringify(config))
       const path = await resolveTargetPath(repository)
-      expect(path.normalize(path)).toEqual(path.normalize(expected))
+      expect(path).toEqual(expected)
     })
   })
 
