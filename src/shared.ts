@@ -7,7 +7,7 @@ import parseGitURL from 'git-url-parse'
 import fg from 'fast-glob'
 import ora from 'ora'
 
-const HOME = process.env.VITEST ? resolve('test') : process.env.HOME!
+const HOME = process.env.HOME!
 export const configDir = join(HOME, '.repom')
 export const configPath = join(configDir, 'config.json')
 
@@ -16,7 +16,6 @@ export interface Config {
   groupBy: {
     'source': boolean
     'owner': boolean
-    'name': boolean
   }
 }
 
@@ -25,7 +24,6 @@ export const defaultConfig: Config = {
   groupBy: {
     source: false,
     owner: true,
-    name: true,
   },
 }
 
@@ -52,9 +50,7 @@ export async function resolveTargetPath(repository: string) {
   if (config.groupBy.owner) {
     suffixPaths.push(parsed.owner)
   }
-  if (config.groupBy.name) {
-    suffixPaths.push(parsed.name)
-  }
+  suffixPaths.push(parsed.name)
 
   const targetPath = join(config.baseDir, ...suffixPaths)
 
