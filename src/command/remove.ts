@@ -8,7 +8,7 @@ import ora from 'ora'
 
 export async function clearEmptyDir(path: string, endPath: string) {
   const parentPath = dirname(path)
-  if (parentPath === endPath) {
+  if (parentPath === '/' || parentPath === endPath) {
     return
   }
   const files = await fsp.readdir(parentPath)
