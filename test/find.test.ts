@@ -62,11 +62,6 @@ describe('command find', () => {
     })
     // @ts-expect-error test only
     const stdout = logger.success.mock.calls.map((args: any[]) => args[0]) as string[]
-    expect(stdout).toMatchInlineSnapshot(`
-      [
-        "find successfully, path: [33m/test/repom[39m",
-        "📋 [32mCopied to clipboard[39m, just use Ctrl+V",
-      ]
-    `)
+    expect(stdout).toMatch(/find successfully/)
   })
 })

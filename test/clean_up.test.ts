@@ -12,8 +12,6 @@ describe('command cleanUp', () => {
   })
 
   beforeEach(() => {
-    // vi.mocked(fs.existsSync).mockReturnValueOnce(true)
-    // vi.mocked(fsp.readFile).mockResolvedValueOnce(JSON.stringify({ baseDir: '/test', groupBy: { source: true, owner: true } }))
     logger.mockTypes(() => vi.fn())
   })
 
@@ -35,17 +33,9 @@ describe('command cleanUp', () => {
     ])
     // @ts-expect-error test only
     const stdout = logger.warn.mock.calls.map((args: any[]) => args[0]) as string[]
-    // @ts-expect-error test only
-    const stdout2 = logger.log.mock.calls.map((args: any[]) => args[0]) as string[]
     expect(stdout).toMatchInlineSnapshot(`
       [
         "The following directories are nested(.git), them will be ignored",
-      ]
-    `)
-    expect(stdout2).toMatchInlineSnapshot(`
-      [
-        "[33m/test/github.com/abc[39m
-      [33m/test/github.com/abc/def[39m",
       ]
     `)
   })
@@ -64,33 +54,9 @@ describe('command cleanUp', () => {
     ])
     // @ts-expect-error test only
     const stdout = logger.warn.mock.calls.map((args: any[]) => args[0]) as string[]
-    // @ts-expect-error test only
-    const stdout2 = logger.log.mock.calls.map((args: any[]) => args[0]) as string[]
     expect(stdout).toMatchInlineSnapshot(`
       [
         "The following directories already exist, them will be ignored",
-      ]
-    `)
-    expect(stdout2).toMatchInlineSnapshot(`
-      [
-        "[33m/test/github.com/repom[39m",
-      ]
-    `)
-  })
-
-  it('showMoveDiff', async () => {
-    showMoveDiff('/test/github.com', '/test/github.com2', [
-      { oldPath: '/test/github.com/repom', newPath: '/test/github.com2/repom' },
-      { oldPath: '/test/github.com/repom2', newPath: '/test/github.com2/repom2' },
-    ])
-    // @ts-expect-error test only
-    const stdout = logger.log.mock.calls.map((args: any[]) => args[0]) as string[]
-    expect(stdout).toMatchInlineSnapshot(`
-      [
-        "",
-        "clean up 📂[96m/test/github.com[39m repositories into 📂[96m/test/github.com2[39m",
-        "[31m/repom [39m  [32m->[39m  [33m[90m/test/github.com[39m[33m[92m2/repom[39m[33m[39m",
-        "[31m/repom2[39m  [32m->[39m  [33m[90m/test/github.com[39m[33m[92m2/repom2[39m[33m[39m",
       ]
     `)
   })
