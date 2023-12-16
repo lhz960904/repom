@@ -1,21 +1,10 @@
 import type { PathLike } from 'node:fs'
-import fsp from 'node:fs/promises'
-import fs from 'node:fs'
-import { logger, scanRepo } from 'src/shared'
+import { logger } from 'src/shared'
 import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
-import { checkExistDir, checkNestedDir, cleanUp, showMoveDiff } from 'src/command/clean_up'
+import { checkExistDir, checkNestedDir, showMoveDiff } from 'src/command/clean_up'
 import fse from 'fs-extra'
 
 vi.mock('fs-extra')
-vi.mock('node:fs')
-vi.mock('node:fs/promises')
-vi.mock('src/shared', async (importOriginal) => {
-  const mod = await importOriginal<typeof import('src/shared')>()
-  return {
-    ...mod,
-    scanRepo: vi.fn(),
-  }
-})
 
 describe('command cleanUp', () => {
   beforeAll(() => {

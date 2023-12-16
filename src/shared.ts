@@ -1,4 +1,4 @@
-import { join, resolve } from 'node:path'
+import { join } from 'node:path'
 import process from 'node:process'
 import fs from 'node:fs'
 import fsp from 'node:fs/promises'
