@@ -1,3 +1,4 @@
+import path from 'node:path'
 import { logger, normalizeCliWidth, resolveConfig, resolveTargetPath, scanRepo } from 'src/shared'
 import confirm from '@inquirer/confirm'
 import chalk from 'chalk'
@@ -66,12 +67,18 @@ export async function cleanUp(targetDir?: string) {
   }
 }
 
-function checkNestedDir(tasks: Task[]) {
+function arePathsNested(path1: string, path2: string) {
+  if (path1 === path2) return false
+  const relativePath = path.relative(path1, path2)
+  return !relativePath.startsWith('..') && !path.isAbsolute(relativePath)
+}
+
+export function checkNestedDir(tasks: Task[]) {
   const nestedDirs: string[] = []
   tasks.forEach((task) => {
-    const childDirs = tasks.map(t =>
-      t.oldPath.startsWith(task.oldPath) && t.oldPath !== task.oldPath ? t.oldPath : null,
-    ).filter(Boolean) as string[]
+    const childDirs = tasks
+      .map(t => arePathsNested(task.oldPath, t.oldPath) ? t.oldPath : null)
+      .filter(Boolean) as string[]
     if (childDirs?.length) {
       nestedDirs.push(task.oldPath)
       nestedDirs.push(...childDirs)
@@ -86,7 +93,7 @@ function checkNestedDir(tasks: Task[]) {
   return tasks
 }
 
-function checkExistDir(tasks: Task[]) {
+export function checkExistDir(tasks: Task[]) {
   const existedDirs = tasks.map(task => fse.existsSync(task.newPath) ? task.oldPath : null).filter(Boolean)
   if (existedDirs.length) {
     logger.warn(`The following directories already exist, them will be ignored`)
@@ -96,7 +103,7 @@ function checkExistDir(tasks: Task[]) {
   return tasks
 }
 
-function showMoveDiff(sourceDir: string, targetDir: string, tasks: Task[]) {
+export function showMoveDiff(sourceDir: string, targetDir: string, tasks: Task[]) {
   tasks = normalizeCliWidth(tasks.map(task => task.oldPath)).map((oldPath, index) => {
     return { oldPath, newPath: tasks[index].newPath }
   })
