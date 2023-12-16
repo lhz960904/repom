@@ -1,7 +1,7 @@
 {
   "name": "repom",
   "type": "module",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "packageManager": "pnpm@8.11.0",
   "description": "CLI for managing repositories. configurable, customizable, interactive.",
   "author": "lihaozecq@gmail.com",
