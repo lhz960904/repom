@@ -1,7 +1,7 @@
 {
   "name": "repom",
   "type": "module",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "packageManager": "pnpm@8.11.0",
   "description": "CLI for managing repositories. configurable, customizable, interactive.",
   "author": "lihaozecq@gmail.com>",
@@ -12,7 +12,10 @@
     "url": "git+https://github.com/lhz960904/repom.git"
   },
   "bugs": "https://github.com/lhz960904/repom/issues",
-  "keywords": ["manager repository", "git repository"],
+  "keywords": [
+    "manager repository",
+    "git repository"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
