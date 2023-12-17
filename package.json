@@ -4,7 +4,7 @@
   "version": "0.1.4",
   "packageManager": "pnpm@8.11.0",
   "description": "CLI for managing repositories. configurable, customizable, interactive.",
-  "author": "lihaozecq@gmail.com>",
+  "author": "lihaozecq@gmail.com",
   "license": "MIT",
   "homepage": "https://github.com/lhz960904/repom#readme",
   "repository": {
