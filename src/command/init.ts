@@ -1,9 +1,9 @@
 import fs from 'node:fs'
 import fsp from 'node:fs/promises'
-import chalk from 'chalk'
+import c from 'picocolors'
 import { configDir, configPath, defaultConfig, logger } from 'src/shared'
 
-const configPathTip = `Config path: ${chalk.yellow(configPath)}`
+const configPathTip = `Config path: ${c.yellow(configPath)}`
 
 export async function init() {
   if (fs.existsSync(configPath)) {

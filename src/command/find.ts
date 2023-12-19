@@ -1,4 +1,4 @@
-import chalk from 'chalk'
+import c from 'picocolors'
 import clipboard from 'clipboardy'
 import { logger, resolveConfig, scanRepo } from 'src/shared'
 import { $ } from 'execa'
@@ -31,8 +31,8 @@ export async function find(name: string, options: { open?: boolean }) {
 
   if (targetPath) {
     await clipboard.write(`cd ${matchDirs[0]}`)
-    logger.success(`find successfully, path: ${chalk.yellow(targetPath)}`)
-    logger.success(`📋 ${chalk.green('Copied to clipboard')}, just use Ctrl+V`)
+    logger.success(`find successfully, path: ${c.yellow(targetPath)}`)
+    logger.success(`📋 ${c.green('Copied to clipboard')}, just use Ctrl+V`)
     if (options.open) {
       try {
         await $`code ${matchDirs[0]}`

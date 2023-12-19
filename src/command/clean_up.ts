@@ -1,7 +1,7 @@
 import path from 'node:path'
 import { logger, normalizeCliWidth, resolveConfig, resolveTargetPath, scanRepo } from 'src/shared'
 import confirm from '@inquirer/confirm'
-import chalk from 'chalk'
+import c from 'picocolors'
 import ora from 'ora'
 import gitRemoteOriginUrl from 'git-remote-origin-url'
 import fse from 'fs-extra'
@@ -33,7 +33,7 @@ export async function cleanUp(targetDir?: string) {
 
   if (failedRemoteDirs.length) {
     logger.warn(`The following directories can't resolve git remote url, them will be ignored`)
-    logger.log(chalk.yellow(failedRemoteDirs.join('\n')))
+    logger.log(c.yellow(failedRemoteDirs.join('\n')))
   }
 
   // filter don't need move
@@ -87,7 +87,7 @@ export function checkNestedDir(tasks: Task[]) {
 
   if (nestedDirs.length) {
     logger.warn(`The following directories are nested(.git), them will be ignored`)
-    logger.log(chalk.yellow(nestedDirs.join('\n')))
+    logger.log(c.yellow(nestedDirs.join('\n')))
   }
   tasks = tasks.filter(task => !nestedDirs.includes(task.oldPath))
   return tasks
@@ -97,7 +97,7 @@ export function checkExistDir(tasks: Task[]) {
   const existedDirs = tasks.map(task => fse.existsSync(task.newPath) ? task.oldPath : null).filter(Boolean)
   if (existedDirs.length) {
     logger.warn(`The following directories already exist, them will be ignored`)
-    logger.log(chalk.yellow(existedDirs.join('\n')))
+    logger.log(c.yellow(existedDirs.join('\n')))
   }
   tasks = tasks.filter(task => !existedDirs.includes(task.oldPath))
   return tasks
@@ -108,14 +108,14 @@ export function showMoveDiff(sourceDir: string, targetDir: string, tasks: Task[]
     return { oldPath, newPath: tasks[index].newPath }
   })
   logger.log('')
-  logger.log(`clean up 📂${chalk.cyanBright(sourceDir)} repositories into 📂${chalk.cyanBright(targetDir)}`)
+  logger.log(`clean up 📂${c.cyan(sourceDir)} repositories into 📂${c.cyan(targetDir)}`)
   tasks.forEach((task) => {
     let i = 0
     while (task.oldPath[i] === task.newPath[i]) {
       i++
     }
-    const oldPath = chalk.red(task.oldPath.slice(i))
-    const newPath = chalk.gray(task.newPath.slice(0, i)) + chalk.greenBright(task.newPath.slice(i))
-    logger.log(`${oldPath}  ${chalk.green('->')}  ${chalk.yellow(newPath)}`)
+    const oldPath = c.red(task.oldPath.slice(i))
+    const newPath = c.gray(task.newPath.slice(0, i)) + c.cyan(task.newPath.slice(i))
+    logger.log(`${oldPath}  ${c.green('->')}  ${c.yellow(newPath)}`)
   })
 }

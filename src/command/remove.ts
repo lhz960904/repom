@@ -3,7 +3,7 @@ import fsp from 'node:fs/promises'
 import { logger, resolveConfig, scanRepo } from 'src/shared'
 import checkbox from '@inquirer/checkbox'
 import confirm from '@inquirer/confirm'
-import chalk from 'chalk'
+import c from 'picocolors'
 import ora from 'ora'
 
 export async function clearEmptyDir(path: string, endPath: string) {
@@ -22,7 +22,7 @@ async function removeDir(dirs: string[]) {
   const config = await resolveConfig()
   const spinner = ora(`begin remove repository`).start()
   for (const dir of dirs) {
-    spinner.text = `removing repository ${chalk.yellow(dir)}`
+    spinner.text = `removing repository ${c.yellow(dir)}`
     await fsp.rm(dir, { recursive: true })
     await clearEmptyDir(dir, config.baseDir)
   }
@@ -42,7 +42,7 @@ export async function remove(name: string) {
   }
   if (matchDirs.length === 1) {
     try {
-      const confirmRemove = await confirm({ message: `Confirm remove ${chalk.yellow(matchDirs[0])}` })
+      const confirmRemove = await confirm({ message: `Confirm remove ${c.yellow(matchDirs[0])}` })
       if (confirmRemove) {
         removeDir(matchDirs)
       }
