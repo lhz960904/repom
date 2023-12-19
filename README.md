@@ -12,11 +12,11 @@
 ```
 .$BASE_DIR
 ├── github.com (optional)
-│   └── vuejs  (optional)
+│  └── vuejs (optional)
 │       ├── core
 │       └── docs
 ├── gitlab.com
-│   └── owner 
+│   └── owner
 │       ├── repoA
 │       └── repoB
 ```
@@ -72,9 +72,9 @@ repom find <name>
 
 You can add `-o` option if you register `code` command, will auto open repo by VSCode
 
-### 🚨 Clean up exist dircatory 
+### 🚨 Clean up exist dircatory
 
-> the command will clean up existed directories to base dir, **can't roll back** .  
+> the command will clean up existed directories to base dir, **can't roll back** .
 
 ```bash
 repom clean-up <dir>
