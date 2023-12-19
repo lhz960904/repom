@@ -17,9 +17,6 @@ dependencies:
   cac:
     specifier: ^6.7.14
     version: 6.7.14
-  chalk:
-    specifier: ^5.3.0
-    version: 5.3.0
   clipboardy:
     specifier: ^4.0.0
     version: 4.0.0
