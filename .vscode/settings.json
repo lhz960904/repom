@@ -7,6 +7,8 @@
     "execa",
     "repom"
   ],
+  "editor.formatOnSave": false,
+  "prettier.enable": false,
   "eslint.experimental.useFlatConfig": true,
   // Enable eslint for all supported languages
   "eslint.validate": [
